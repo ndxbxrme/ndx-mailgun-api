@@ -1,12 +1,13 @@
 (function() {
   'use strict';
-  var superagent;
+  var jade, superagent;
 
   superagent = require('superagent');
 
+  jade = require('jade');
+
   module.exports = function(ndx) {
     var apiKey, baseUrl, callbacks, fillTemplate, safeCallback, url;
-    console.log('hi from ndx mailgun api');
     apiKey = process.env.EMAIL_API_KEY || ndx.settings.EMAIL_API_KEY;
     baseUrl = process.env.EMAIL_BASE_URL || ndx.settings.EMAIL_BASE_URL;
     fillTemplate = function(template, data) {
@@ -32,15 +33,12 @@
       }
       return results;
     };
-    console.log('apikey', apiKey, 'baseUrl', baseUrl);
     if (apiKey && baseUrl) {
       url = baseUrl.replace('https://', "https://api:" + apiKey + "@");
       url = url + "/messages";
-      console.log('url', url);
       return ndx.email = {
         send: function(ctx, cb) {
           var message;
-          console.log('i want to send');
           if (process.env.EMAIL_OVERRIDE) {
             ctx.to = process.env.EMAIL_OVERRIDE;
           }
@@ -51,13 +49,16 @@
               subject: fillTemplate(ctx.subject, ctx),
               html: jade.render(ctx.body, ctx)
             };
-            console.log('sending', message);
             return superagent.post(url).type('form').send(message).end(function(err, response) {
               if (err) {
-                console.log(err);
-              }
-              if (response) {
-                return console.log(response.body);
+                return safeCallback('error', {
+                  message: message,
+                  error: err
+                });
+              } else if (response) {
+                return safeCallback('send', {
+                  message: message
+                });
               }
             });
           } else {
