@@ -21,6 +21,7 @@ module.exports = (ndx) ->
   console.log 'apikey', apiKey, 'baseUrl', baseUrl
   if apiKey and baseUrl
     url = baseUrl.replace 'https://', "https://api:#{apiKey}@"
+    url = "#{url}/messages"
     console.log 'url', url
     ndx.email =
       send: (ctx, cb) ->

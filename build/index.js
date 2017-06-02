@@ -35,6 +35,7 @@
     console.log('apikey', apiKey, 'baseUrl', baseUrl);
     if (apiKey && baseUrl) {
       url = baseUrl.replace('https://', "https://api:" + apiKey + "@");
+      url = url + "/messages";
       console.log('url', url);
       return ndx.email = {
         send: function(ctx, cb) {
