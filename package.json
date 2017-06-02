@@ -1,6 +1,6 @@
 {
   "name": "ndx-mailgun-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Send emails using Mailgun's http API for ndx-framework apps",
   "main": "build/index.js",
   "scripts": {

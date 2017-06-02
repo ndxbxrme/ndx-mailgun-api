@@ -39,6 +39,7 @@
       return ndx.email = {
         send: function(ctx, cb) {
           var message;
+          console.log('i want to send');
           if (process.env.EMAIL_OVERRIDE) {
             ctx.to = process.env.EMAIL_OVERRIDE;
           }
@@ -49,13 +50,16 @@
               subject: fillTemplate(ctx.subject, ctx),
               html: jade.render(ctx.body, ctx)
             };
+            console.log('sending', message);
             return superagent.post(url).type('form').send(message).end(function(err, response) {
               if (err) {
+                console.log(err);
                 return safeCallback('error', {
                   message: message,
                   error: err
                 });
               } else if (response) {
+                console.log(response.body);
                 return safeCallback('send', {
                   message: message
                 });

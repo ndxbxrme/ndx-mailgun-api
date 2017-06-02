@@ -23,6 +23,7 @@ module.exports = (ndx) ->
     url = "#{url}/messages"
     ndx.email =
       send: (ctx, cb) ->
+        console.log 'i want to send'
         if process.env.EMAIL_OVERRIDE
           ctx.to = process.env.EMAIL_OVERRIDE
         if not process.env.EMAIL_DISABLE
@@ -31,15 +32,18 @@ module.exports = (ndx) ->
             to: ctx.to
             subject: fillTemplate ctx.subject, ctx
             html: jade.render ctx.body, ctx
+          console.log 'sending', message
           superagent.post url
           .type 'form'
           .send message
           .end (err, response) ->
             if err
+              console.log err
               safeCallback 'error', 
                 message: message
                 error: err
             else if response
+              console.log response.body
               safeCallback 'send',
                 message: message
         else
