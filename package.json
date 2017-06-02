@@ -1,6 +1,6 @@
 {
   "name": "ndx-mailgun-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Send emails using Mailgun's http API for ndx-framework apps",
   "main": "build/index.js",
   "scripts": {
@@ -23,5 +23,9 @@
     "grunt-contrib-nodeunit": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "load-grunt-tasks": "^3.5.2"
+  },
+  "dependencies": {
+    "jade": "^1.11.0",
+    "superagent": "^3.5.2"
   }
 }
