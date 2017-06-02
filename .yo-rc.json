@@ -1,0 +1,13 @@
+{
+  "generator-ndx": {
+    "filters": {
+      "appType": "cli",
+      "server": true,
+      "description": "Send emails using Mailgun's http API for ndx-framework apps",
+      "appName": "ndx-mailgun-api",
+      "gitname": "ndxbxrme",
+      "gitemail": "lewis_the_cat@hotmail.com"
+    },
+    "appname": "github"
+  }
+}
