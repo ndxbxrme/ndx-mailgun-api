@@ -6,6 +6,7 @@
 
   module.exports = function(ndx) {
     var apiKey, baseUrl, callbacks, fillTemplate, safeCallback, url;
+    console.log('hi from ndx mailgun api');
     apiKey = process.env.EMAIL_API_KEY || ndx.settings.EMAIL_API_KEY;
     baseUrl = process.env.EMAIL_BASE_URL || ndx.settings.EMAIL_BASE_URL;
     fillTemplate = function(template, data) {
@@ -31,11 +32,14 @@
       }
       return results;
     };
+    console.log('apikey', apiKey, 'baseUrl', baseUrl);
     if (apiKey && baseUrl) {
       url = baseUrl.replace('https://', "https://api:" + apiKey + "@");
+      console.log('url', url);
       return ndx.email = {
         send: function(ctx, cb) {
           var message;
+          console.log('i want to send');
           if (process.env.EMAIL_OVERRIDE) {
             ctx.to = process.env.EMAIL_OVERRIDE;
           }
