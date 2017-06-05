@@ -26,22 +26,26 @@ module.exports = (ndx) ->
         if process.env.EMAIL_OVERRIDE
           ctx.to = process.env.EMAIL_OVERRIDE
         if not process.env.EMAIL_DISABLE
-          message =
-            from: ctx.from or from
-            to: ctx.to
-            subject: fillTemplate ctx.subject, ctx
-            html: jade.render ctx.body, ctx
-          superagent.post url
-          .type 'form'
-          .send message
-          .end (err, response) ->
-            if err
-              safeCallback 'error', 
-                message: message
-                error: err
-            else if response
-              safeCallback 'send',
-                message: message
+          try
+            message =
+              from: ctx.from or from
+              to: ctx.to
+              subject: fillTemplate ctx.subject, ctx
+              html: jade.render ctx.body, ctx
+            superagent.post url
+            .type 'form'
+            .send message
+            .end (err, response) ->
+              if err
+                safeCallback 'error', 
+                  message: message
+                  error: err
+              else if response
+                safeCallback 'send',
+                  message: message
+          catch (e) ->
+            safeCallback 'error',
+              error: e
         else
           console.log 'mail disabled'
   
