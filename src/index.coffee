@@ -43,7 +43,7 @@ module.exports = (ndx) ->
               else if response
                 safeCallback 'send',
                   message: message
-          catch (e) ->
+          catch e
             safeCallback 'error',
               error: e
         else
