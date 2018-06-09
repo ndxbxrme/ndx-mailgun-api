@@ -52,21 +52,24 @@
               };
               return superagent.post(url).type('form').send(message).end(function(err, response) {
                 if (err) {
-                  return safeCallback('error', {
+                  safeCallback('error', {
                     message: message,
                     error: err
                   });
+                  return typeof cb === "function" ? cb(err) : void 0;
                 } else if (response) {
-                  return safeCallback('send', {
+                  safeCallback('send', {
                     message: message
                   });
+                  return typeof cb === "function" ? cb(err) : void 0;
                 }
               });
             } catch (error) {
               e = error;
-              return safeCallback('error', {
+              safeCallback('error', {
                 error: e
               });
+              return typeof cb === "function" ? cb(e) : void 0;
             }
           } else {
             return console.log('mail disabled');

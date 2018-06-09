@@ -40,12 +40,15 @@ module.exports = (ndx) ->
                 safeCallback 'error', 
                   message: message
                   error: err
+                cb? err
               else if response
                 safeCallback 'send',
                   message: message
+                cb? err
           catch e
             safeCallback 'error',
               error: e
+            cb? e
         else
           console.log 'mail disabled'
   
